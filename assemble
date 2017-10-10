@@ -16,18 +16,18 @@ set -eo pipefail
 # how we expect it to.
 
 if [ ! -f /tmp/src/distutils.cfg ]; then
-    cat > /tmp/src/distutils.cfg < !
+    cat > /tmp/src/distutils.cfg << !
 [easy_install]
 !
 
     if [ x"$PIP_INDEX_URL" != x"" ]; then
-        cat >> /tmp/src/distutils.cfg < !
+        cat >> /tmp/src/distutils.cfg << !
 index_url = $PIP_INDEX_URL
 !
     fi
 
     if [ x"$PIP_FIND_LINKS" != x"" ]; then
-        cat >> /tmp/src/distutils.cfg < !
+        cat >> /tmp/src/distutils.cfg << !
 find_links = $PIP_FIND_LINKS
 !
     fi
