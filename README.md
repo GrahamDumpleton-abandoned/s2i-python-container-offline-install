@@ -7,6 +7,9 @@ oc new-app --file=https://raw.githubusercontent.com/GrahamDumpleton/s2i-python-c
 oc new-app --file=https://raw.githubusercontent.com/GrahamDumpleton/s2i-python-container-offline-install/master/template.json --param PYTHON_VERSION=3.5
 ```
 
+The OpenShift cluster must support ``docker`` type builds. Only a build is
+triggered by above command, no applications deployed.
+
 To use, then run:
 
 ```
