@@ -1,0 +1,85 @@
+{
+    "kind": "Template",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "s2i-python-container",
+        "annotations": {
+            "tags": "python",
+            "iconClass": "icon-python"
+        }
+    },
+    "parameters": [
+        {
+            "name": "IMAGE_NAME",
+            "description": "Name of the output image.",
+            "value": "s2i-python-container",
+            "required": true
+        },
+        {
+            "name": "REPOSITORY_URL",
+            "description": "Git repository URL.",
+            "value": "https://github.com/GrahamDumpleton/s2i-python-container-offline-install",
+            "required": true
+        },
+        {
+            "name": "PYTHON_VERSION",
+            "description": "The version of Python.",
+            "value": "3.5",
+            "required": true
+        }
+    ],
+    "objects": [
+        {
+            "kind": "ImageStream",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "${IMAGE_NAME}-${PYTHON_VERSION}",
+                "labels": {
+                    "build": "${IMAGE_NAME}-${PYTHON_VERSION}"
+                }
+            }
+        },
+        {
+            "kind": "BuildConfig",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "${IMAGE_NAME}-${PYTHON_VERSION}",
+                "labels": {
+                    "build": "${IMAGE_NAME}-${PYTHON_VERSION}"
+                }
+            },
+            "spec": {
+                "triggers": [
+                    {
+                        "type": "ConfigChange"
+                    },
+                    {
+                        "type": "ImageChange"
+                    }
+                ],
+                "source": {
+                    "type": "Git",
+                    "git": {
+                        "uri": "${REPOSITORY_URL}"
+                    }
+                },
+                "strategy": {
+                    "type": "Docker",
+                    "dockerStrategy": {
+                        "from": {
+                            "kind": "ImageStreamTag",
+                            "namespace": "openshift",
+                            "name": "python:${PYTHON_VERSION}"
+                        }
+                    }
+                },
+                "output": {
+                    "to": {
+                        "kind": "ImageStreamTag",
+                        "name": "${IMAGE_NAME}-${PYTHON_VERSION}:latest"
+                    }
+                }
+            }
+        }
+    ]
+}
