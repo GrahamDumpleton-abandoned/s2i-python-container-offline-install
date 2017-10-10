@@ -18,7 +18,7 @@ set -eo pipefail
 if [ ! -f /tmp/src/distutils.cfg ]; then
     if [ x"$PIP_NO_INDEX" = x"true" ]; then
         cat >> /tmp/distutils.cfg << !
-allowed_hosts = None
+allow_hosts = None
 !
     fi
 
