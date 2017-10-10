@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# Exec the original save-artifacts script.
+
+exec /usr/libexec/s2i/save-artifacts
