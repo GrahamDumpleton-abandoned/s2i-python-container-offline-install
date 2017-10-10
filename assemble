@@ -1,5 +1,9 @@
 #!/bin/bash
 
+set -x
+
+set -eo pipefail
+
 # If PIP_INDEX_URL is specified, generate a distutils.cfg if one does
 # not already exist, setting index_url so that easy_install uses the
 # same package index. We need to check for distutils.cfg in the /tmp/src
